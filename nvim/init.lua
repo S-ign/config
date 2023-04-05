@@ -462,7 +462,7 @@ local servers = {
   },
   -- pyright = {},
   -- rust_analyzer = {},
-  -- tsserver = {},
+  tsserver = {},
 
   lua_ls = {
     Lua = {
@@ -547,7 +547,16 @@ cmp.setup {
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
 
-vim.cmd('set expandtab')
+--vim.cmd('set expandtab')
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
 
 local options = { noremap = true }
-vim.keymap.set("i", "jk", "<Esc>", options)
+vim.keymap.set("i", "jk", "<Esc>")
+vim.keymap.set("i", "jl", "<C-o>")
+vim.keymap.set("n", "<F2>", ":wa<CR>")
+vim.keymap.set("n", "<C-h>", "^")
+vim.keymap.set("n", "<C-l>", "$")
+vim.opt.cursorline = true
+vim.opt.colorcolumn = "100"
