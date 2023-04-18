@@ -560,3 +560,4 @@ vim.keymap.set("n", "<C-h>", "^")
 vim.keymap.set("n", "<C-l>", "$")
 vim.opt.cursorline = true
 vim.opt.colorcolumn = "100"
+vim.opt.relativenumber = true
