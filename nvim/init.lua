@@ -112,8 +112,14 @@ require('lazy').setup({
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', opts = {} },
-
+    {
+      "j-hui/fidget.nvim",
+      tag = "legacy",
+      event = "LspAttach",
+      opts = {
+        -- options
+      },
+    },
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
     },
@@ -217,6 +223,7 @@ require('lazy').setup({
   --{ import = 'custom.plugins' },
 }, {})
 
+
 -- [[ Setting options ]]
 -- See `:help vim.o`
 
@@ -316,14 +323,7 @@ pcall(require('telescope').load_extension, 'fzf')
 -- See `:help telescope.builtin`
 vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
 vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
-vim.keymap.set('n', '<leader>/', function()
-  -- You can pass additional configuration to telescope to change theme, layout, etc.
-  require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-    winblend = 10,
-    previewer = false,
-  })
-end, { desc = '[/] Fuzzily search in current buffer' })
-
+vim.keymap.set('n', '<leader>f', require('telescope.builtin').find_files, { desc = '[f] Find Files' })
 vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
 vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
@@ -334,7 +334,7 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'typescript', 'vim' },
+  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'typescript', 'vim', 'svelte'},
 
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
   auto_install = false,
@@ -428,6 +428,9 @@ local on_attach = function(_, bufnr)
   nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
   nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
   nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+  nmap('<leader>/', require('telescope.builtin').jumplist)
+  nmap('<leader>m', require('telescope.builtin').marks)
+  nmap('<leader>e', require('harpoon.ui').toggle_quick_menu())
 
   -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
@@ -463,7 +466,7 @@ local servers = {
   -- pyright = {},
   -- rust_analyzer = {},
   tsserver = {},
-
+  svelte = {},
   lua_ls = {
     Lua = {
       workspace = { checkThirdParty = false },
@@ -556,8 +559,12 @@ local options = { noremap = true }
 vim.keymap.set("i", "jk", "<Esc>")
 vim.keymap.set("i", "jl", "<C-o>")
 vim.keymap.set("n", "<F2>", ":wa<CR>")
+vim.keymap.set("n", "<F12>", ":GoFmt<CR>:GoImport<CR>")
 vim.keymap.set("n", "<C-h>", "^")
 vim.keymap.set("n", "<C-l>", "$")
 vim.opt.cursorline = true
 vim.opt.colorcolumn = "100"
 vim.opt.relativenumber = true
+vim.keymap.set('n', '<leader>(', "i ()<esc>i<cr><c-o>O")
+vim.keymap.set('n', '<leader>{', "i {}<esc>i<cr><c-o>O")
+vim.keymap.set('n', '<leader>[', "i []<esc>i<cr><c-o>O")

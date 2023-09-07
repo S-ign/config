@@ -1,8 +1,11 @@
 lastupdatecheck: 0
 recentrepos:
 - /home/sign/.config
+- /home/sign/git/hha
+- /home/sign/git/mw-funnel
 - /home/sign/git/hackerrank
 - /home/sign/git/DispatchConferenceRegistration
 startuppopupversion: 5
 customcommandshistory: []
 hidecommandlog: false
+ignorewhitespaceindiffview: false
